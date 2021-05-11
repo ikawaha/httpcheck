@@ -42,8 +42,7 @@ func (tt *Tester) Check() *Tester {
 	tt.client.Jar = newJar
 	response, err := tt.client.Do(tt.request)
 	if err != nil {
-		println(err.Error())
-		tt.t.FailNow()
+		assert.FailNow(tt.t, err.Error())
 	}
 
 	// save response for assertion checks
