@@ -70,13 +70,13 @@ func (tt *Tester) stop() {
 
 // headers ///////////////////////////////////////////////////////
 
-// WithHeader - Will put header on request
+// WithHeader puts header on the request.
 func (tt *Tester) WithHeader(key, value string) *Tester {
 	tt.request.Header.Set(key, value)
 	return tt
 }
 
-// Will put a map of headers on request
+// WithHeaders puts a map of headers on the request.
 func (tt *Tester) WithHeaders(headers map[string]string) *Tester {
 	for key, value := range headers {
 		tt.request.Header.Set(key, value)
@@ -84,7 +84,7 @@ func (tt *Tester) WithHeaders(headers map[string]string) *Tester {
 	return tt
 }
 
-// HasHeader - Will check if response contains header on provided key with provided value
+// HasHeader checks if the response contains header on provided key with provided value.
 func (tt *Tester) HasHeader(key, expectedValue string) *Tester {
 	value := tt.response.Header.Get(key)
 	assert.Exactly(tt.t, expectedValue, value)
@@ -92,7 +92,7 @@ func (tt *Tester) HasHeader(key, expectedValue string) *Tester {
 	return tt
 }
 
-// Will check if response contains a provided headers map
+// HasHeaders checks if the response contains a provided headers map
 func (tt *Tester) HasHeaders(headers map[string]string) *Tester {
 	for key, expectedValue := range headers {
 		value := tt.response.Header.Get(key)
@@ -104,7 +104,7 @@ func (tt *Tester) HasHeaders(headers map[string]string) *Tester {
 
 // BasicAuth ///////////////////////////////////////////////////////
 
-// WithBasicAuth - Alias for the basic auth request header.
+// WithBasicAuth aliases for the basic auth request header.
 func (tt *Tester) WithBasicAuth(user, pass string) *Tester {
 	var b bytes.Buffer
 	b.WriteString(user)
@@ -115,7 +115,7 @@ func (tt *Tester) WithBasicAuth(user, pass string) *Tester {
 
 // cookies ///////////////////////////////////////////////////////
 
-// HasCookie - Will put cookie on request
+// HasCookie puts cookie on the request.
 func (tt *Tester) HasCookie(key, expectedValue string) *Tester {
 	found := false
 	for _, cookie := range tt.client.Jar.Cookies(tt.request.URL) {
@@ -129,7 +129,7 @@ func (tt *Tester) HasCookie(key, expectedValue string) *Tester {
 	return tt
 }
 
-// WithCookie - Will check if response contains cookie with provided key and value
+// WithCookie checks if the response contains cookie with provided key and value.
 func (tt *Tester) WithCookie(key, value string) *Tester {
 	tt.request.AddCookie(&http.Cookie{
 		Name:  key,
@@ -141,7 +141,7 @@ func (tt *Tester) WithCookie(key, value string) *Tester {
 
 // status ////////////////////////////////////////////////////////
 
-// HasStatus - Will check if response status is equal to provided
+// HasStatus checks if the response status is equal to provided.
 func (tt *Tester) HasStatus(status int) *Tester {
 	assert.Exactly(tt.t, status, tt.response.StatusCode)
 	return tt
@@ -149,19 +149,20 @@ func (tt *Tester) HasStatus(status int) *Tester {
 
 // JSON body /////////////////////////////////////////////////////
 
-// WithJSON - Will add the json-encoded struct to the body
+// WithJSON adds a json encoded struct to the body.
 func (tt *Tester) WithJSON(value interface{}) *Tester {
 	encoded, err := json.Marshal(value)
 	assert.Nil(tt.t, err)
 	return tt.WithBody(encoded)
 }
 
-// WithJson - deprecated
+// WithJson adds a json encoded struct to the body. (deprecated)
+// nolint:golint
 func (tt *Tester) WithJson(value interface{}) *Tester {
 	return tt.WithJSON(value)
 }
 
-// HasJSON - Will check if body contains json with provided value
+// HasJSON checks if the response body contains json with provided value.
 func (tt *Tester) HasJSON(value interface{}) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -175,26 +176,28 @@ func (tt *Tester) HasJSON(value interface{}) *Tester {
 	return tt
 }
 
-// HasJson - deprecated
+// HasJson checks if the response body contains json with provided value. (deprecated)
+//nolint:golint
 func (tt *Tester) HasJson(value interface{}) *Tester {
 	return tt.HasJSON(value)
 }
 
 // XML //////////////////////////////////////////////////////////
 
-// WithXML - Adds a XML encoded body to the request
+// WithXML adds a xml encoded body to the request.
 func (tt *Tester) WithXML(value interface{}) *Tester {
 	encoded, err := xml.Marshal(value)
 	assert.Nil(tt.t, err)
 	return tt.WithBody(encoded)
 }
 
-// WithXml - deprecated
+// WithXml  adds a xml encoded body to the request. (deprecated)
+//nolint:golint
 func (tt *Tester) WithXml(value interface{}) *Tester {
 	return tt.WithXML(value)
 }
 
-// HasXML - Will check if body contains xml with provided value
+// HasXML checks if body contains xml with provided value.
 func (tt *Tester) HasXML(value interface{}) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -208,21 +211,22 @@ func (tt *Tester) HasXML(value interface{}) *Tester {
 	return tt
 }
 
-// HasXml - deprecated
+// HasXml checks if body contains xml with provided value. (deprecated)
+//nolint:golint
 func (tt *Tester) HasXml(value interface{}) *Tester {
 	return tt.HasXML(value)
 }
 
 // body //////////////////////////////////////////////////////////
 
-// WithBody - Adds the []byte data to the body
+// WithBody adds the []byte data to the body.
 func (tt *Tester) WithBody(body []byte) *Tester {
 	tt.request.Body = ioutil.NopCloser(bytes.NewReader(body))
 	tt.request.ContentLength = int64(len(body))
 	return tt
 }
 
-// HasBody - Will check if body is equal to provided []byte data
+// HasBody checks if the body is equal to provided []byte data.
 func (tt *Tester) HasBody(body []byte) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -233,7 +237,7 @@ func (tt *Tester) HasBody(body []byte) *Tester {
 	return tt
 }
 
-// ContainsBody - Will check if body contains provided [] byte data
+// ContainsBody checks if the body contains provided [] byte data.
 func (tt *Tester) ContainsBody(segment []byte) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -247,7 +251,7 @@ func (tt *Tester) ContainsBody(segment []byte) *Tester {
 	return tt
 }
 
-// NotContainsBody - Will check if body does not contain provided [] byte data
+// NotContainsBody checks if the body does not contain provided [] byte data.
 func (tt *Tester) NotContainsBody(segment []byte) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -261,15 +265,14 @@ func (tt *Tester) NotContainsBody(segment []byte) *Tester {
 	return tt
 }
 
-// WithString - Adds the string to the body
+// WithString adds the string to the body.
 func (tt *Tester) WithString(body string) *Tester {
 	tt.request.Body = ioutil.NopCloser(strings.NewReader(body))
 	tt.request.ContentLength = int64(len(body))
 	return tt
 }
 
-// HasString - Convenience wrapper for HasBody
-// Checks if body is equal to the given string
+// HasString converts the response to a string type and then compares it with the given string.
 func (tt *Tester) HasString(body string) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -280,8 +283,7 @@ func (tt *Tester) HasString(body string) *Tester {
 	return tt
 }
 
-// ContainsString - Convenience wrapper for ContainsBody
-// Checks if body contains the given string
+// ContainsString converts the response to a string type and then checks it containing the given string.
 func (tt *Tester) ContainsString(substr string) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)
@@ -293,8 +295,8 @@ func (tt *Tester) ContainsString(substr string) *Tester {
 	return tt
 }
 
-// NotContainsString - Convenience wrapper for ContainsBody
-// Checks if body does not contain the given string
+// NotContainsString converts the response to a string type and then checks if it does not
+// contain the given string.
 func (tt *Tester) NotContainsString(substr string) *Tester {
 	b, err := ioutil.ReadAll(tt.response.Body)
 	assert.Nil(tt.t, err)

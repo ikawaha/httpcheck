@@ -12,6 +12,7 @@ import (
 )
 
 const (
+	// DefaultClientTimeout is the default timeout for requests made by checker.
 	DefaultClientTimeout = 5 * time.Second
 )
 
