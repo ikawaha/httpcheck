@@ -148,8 +148,8 @@ func TestWithCookie(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, cookie.Value, "value")
 
-	cookie, err = checker.request.Cookie("unknown")
-	assert.NotNil(t, err)
+	_, err = checker.request.Cookie("unknown")
+	assert.Error(t, err)
 }
 
 func TestCheck(t *testing.T) {
