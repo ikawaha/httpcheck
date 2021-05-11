@@ -57,13 +57,13 @@ func (tt *Tester) Cb(callback func(*http.Response)) {
 
 // Will run HTTP server
 func (tt *Tester) run() {
-	//log.Println("running server")
+	// log.Println("running server")
 	tt.server.Start()
 }
 
 // Will stop HTTP server
 func (tt *Tester) stop() {
-	//log.Println("stopping server")
+	// log.Println("stopping server")
 	tt.server.Close()
 	tt.server = createServer(tt.handler)
 }
@@ -94,7 +94,6 @@ func (tt *Tester) HasHeader(key, expectedValue string) *Tester {
 
 // Will check if response contains a provided headers map
 func (tt *Tester) HasHeaders(headers map[string]string) *Tester {
-
 	for key, expectedValue := range headers {
 		value := tt.response.Header.Get(key)
 		assert.Exactly(tt.t, expectedValue, value)

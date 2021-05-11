@@ -32,7 +32,6 @@ func (t *testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			Name: "Some",
 			Age:  30,
 		})
-
 		if err != nil {
 			panic(err)
 		}
@@ -45,7 +44,6 @@ func (t *testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			Name: "Some",
 			Age:  30,
 		})
-
 		if err != nil {
 			panic(err)
 		}
