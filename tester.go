@@ -40,7 +40,7 @@ func (tt *Tester) Check() *Tester {
 	}
 
 	tt.client.Jar = newJar
-	response, err := tt.client.Do(tt.request)
+	response, err := tt.client.Do(tt.request) //nolint:bodyclose
 	if err != nil {
 		assert.FailNow(tt.t, err.Error())
 	}
