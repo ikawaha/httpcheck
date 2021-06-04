@@ -154,7 +154,7 @@ func TestWithCookie(t *testing.T) {
 		WithCookie("key", "value")
 
 	cookie, err := checker.request.Cookie("key")
-	require.NotNil(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, cookie.Value, "value")
 
 	_, err = checker.request.Cookie("unknown")
