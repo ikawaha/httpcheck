@@ -87,6 +87,19 @@ func TestClientTimeout(t *testing.T) {
 	assert.Equal(t, timeout, checker.client.Timeout)
 }
 
+func TestNoRedirect(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Location", "https://localhost/testtest")
+		w.WriteHeader(http.StatusTemporaryRedirect)
+	})
+
+	checker := New(mux, NoRedirect())
+	checker.Test(t, http.MethodGet, "/hello").
+		Check().
+		HasStatus(http.StatusTemporaryRedirect)
+}
+
 func TestTest(t *testing.T) {
 	checker := makeTestChecker()
 	checker.Test(t, "GET", "/some")
