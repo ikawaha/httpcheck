@@ -75,6 +75,12 @@ func (tt *Tester) stop() {
 
 // headers ///////////////////////////////////////////////////////
 
+// WithHostHeader puts "Host" header on the request.
+func (tt *Tester) WithHostHeader(value string) *Tester {
+	tt.request.Host = value
+	return tt
+}
+
 // WithHeader puts header on the request.
 func (tt *Tester) WithHeader(key, value string) *Tester {
 	tt.request.Header.Set(key, value)
