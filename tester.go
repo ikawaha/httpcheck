@@ -131,7 +131,7 @@ func (tt *Tester) WithBearerAuth(token string) *Tester {
 
 // cookies ///////////////////////////////////////////////////////
 
-// HasCookie puts cookie on the request.
+// HasCookie checks if the response contains cookie with provided key and value.
 func (tt *Tester) HasCookie(key, expectedValue string) *Tester {
 	found := false
 	for _, cookie := range tt.client.Jar.Cookies(tt.request.URL) {
@@ -145,7 +145,7 @@ func (tt *Tester) HasCookie(key, expectedValue string) *Tester {
 	return tt
 }
 
-// WithCookie checks if the response contains cookie with provided key and value.
+// WithCookie puts cookie on the request.
 func (tt *Tester) WithCookie(key, value string) *Tester {
 	tt.request.AddCookie(&http.Cookie{
 		Name:  key,
