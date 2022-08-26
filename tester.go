@@ -193,6 +193,7 @@ func (tt *Tester) HasJSON(value interface{}) *Tester {
 }
 
 // HasJson checks if the response body contains json with provided value. (deprecated)
+//
 //nolint:golint
 func (tt *Tester) HasJson(value interface{}) *Tester {
 	return tt.HasJSON(value)
@@ -208,6 +209,7 @@ func (tt *Tester) WithXML(value interface{}) *Tester {
 }
 
 // WithXml  adds a xml encoded body to the request. (deprecated)
+//
 //nolint:golint
 func (tt *Tester) WithXml(value interface{}) *Tester {
 	return tt.WithXML(value)
@@ -228,6 +230,7 @@ func (tt *Tester) HasXML(value interface{}) *Tester {
 }
 
 // HasXml checks if body contains xml with provided value. (deprecated)
+//
 //nolint:golint
 func (tt *Tester) HasXml(value interface{}) *Tester {
 	return tt.HasXML(value)
