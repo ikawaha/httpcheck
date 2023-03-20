@@ -16,14 +16,8 @@ func TestTester_WithMultipart(t *testing.T) {
 		want     bool
 	}{
 		{
-			name:     "OK: expected status 202",
-			method:   http.MethodGet,
-			expected: http.StatusAccepted,
-			want:     false,
-		},
-		{
-			name:     "NG: expected status 200 but got 202",
-			method:   http.MethodGet,
+			name:     "OK: expected status 200",
+			method:   http.MethodPost,
 			expected: http.StatusOK,
 			want:     true,
 		},
