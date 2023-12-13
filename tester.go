@@ -45,7 +45,9 @@ func (tt *Tester) Check() *Tester {
 	if err != nil {
 		assert.FailNow(tt.t, err.Error())
 	}
-	defer response.Body.Close()
+	defer func() {
+		_ = response.Body.Close()
+	}()
 
 	// save response for assertion checks
 	b, err := io.ReadAll(response.Body)
