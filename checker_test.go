@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -19,7 +20,7 @@ type testPerson struct {
 
 type testHandler struct{}
 
-func (t *testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+func (*testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	switch req.URL.Path {
 	case "/some":
 		http.SetCookie(w, &http.Cookie{
@@ -84,6 +85,24 @@ func TestNew(t *testing.T) {
 	checker := New(&testHandler{})
 	require.NotNil(t, checker)
 	assert.Equal(t, DefaultClientTimeout, checker.client.Timeout)
+}
+
+func TestNewExternal(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/some", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("hello"))
+	})
+	ts := httptest.NewServer(mux)
+	defer ts.Close()
+	checker := NewExternal(ts.URL)
+	require.NotNil(t, checker)
+	assert.Equal(t, DefaultClientTimeout, checker.client.Timeout)
+	assert.True(t, checker.external)
+	checker.Test(t, http.MethodGet, "/some").
+		Check().
+		HasStatus(http.StatusOK).
+		HasBody([]byte("hello"))
 }
 
 func TestCheckerOption_ClientTimeout(t *testing.T) {

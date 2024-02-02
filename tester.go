@@ -66,12 +66,18 @@ func (tt *Tester) Cb(callback func(*http.Response)) {
 // Will run HTTP server
 func (tt *Tester) run() {
 	// log.Println("running server")
+	if tt.external {
+		return
+	}
 	tt.server.Start()
 }
 
 // Will stop HTTP server
 func (tt *Tester) stop() {
 	// log.Println("stopping server")
+	if tt.external {
+		return
+	}
 	tt.server.Close()
 	tt.server = createServer(tt.handler)
 }
