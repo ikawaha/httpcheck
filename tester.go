@@ -22,6 +22,11 @@ type Tester struct {
 	*Checker
 }
 
+// T returns the TestingT.
+func (tt *Tester) T() TestingT {
+	return tt.t
+}
+
 // Check - Will make request to built request object.
 // After request is made, it will save response object for future assertions
 // Responsibility of this method is also to start and stop HTTP server
