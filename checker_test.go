@@ -20,7 +20,7 @@ type testPerson struct {
 
 type testHandler struct{}
 
-func (t *testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+func (*testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	switch req.URL.Path {
 	case "/some":
 		http.SetCookie(w, &http.Cookie{
