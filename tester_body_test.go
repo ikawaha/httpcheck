@@ -2,6 +2,7 @@ package httpcheck
 
 import (
 	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -151,4 +152,34 @@ func TestTester_MustNotContainsString(t *testing.T) {
 		Cb(func(response *http.Response) {
 			t.Fatal("it is expected that this assertion will not be executed.")
 		})
+}
+
+func TestTester_MatchesJSONQuery(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/json", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"Name": "Some", "Age": 30}`))
+	})
+	ts := httptest.NewServer(mux)
+	defer ts.Close()
+
+	checker := newTestChecker()
+	checker.Test(t, "GET", "/json").
+		Check().
+		MatchesJSONQuery(`.Name`)
+}
+
+func TestTester_NotMatchesJSONQuery(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/json", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"Name": "Some", "Age": 30}`))
+	})
+	ts := httptest.NewServer(mux)
+	defer ts.Close()
+
+	checker := newTestChecker()
+	checker.Test(t, "GET", "/json").
+		Check().
+		NotMatchesJSONQuery(`.XXX`)
 }
