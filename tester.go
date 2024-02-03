@@ -3,6 +3,7 @@ package httpcheck
 import (
 	"bytes"
 	"io"
+	"log"
 	"net/http"
 	"net/http/cookiejar"
 
@@ -35,6 +36,19 @@ func (tt *Tester) Check() *Tester {
 	tt.run()
 	defer tt.stop()
 
+	if tt.debug {
+		log.Println("==", tt.request.Method, tt.request.URL)
+		log.Println(">> header", tt.request.Header)
+		body := "nil"
+		if tt.request.Body != nil {
+			b, err := io.ReadAll(tt.request.Body)
+			require.NoError(tt.t, err, "failed to read request body")
+			tt.request.Body = io.NopCloser(bytes.NewReader(b))
+			body = string(b)
+		}
+		log.Println(">> body:", string(body))
+	}
+
 	newJar, _ := cookiejar.New(nil)
 	for name := range tt.pcookies {
 		for _, oldCookie := range tt.client.Jar.Cookies(tt.request.URL) {
@@ -60,6 +74,12 @@ func (tt *Tester) Check() *Tester {
 
 	tt.response = response
 	tt.response.Body = io.NopCloser(bytes.NewReader(b))
+
+	if tt.debug {
+		log.Println("<< status:", tt.response.Status)
+		log.Println("<< body:", string(b))
+	}
+
 	return tt
 }
 
