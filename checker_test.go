@@ -95,11 +95,12 @@ func TestNewExternal(t *testing.T) {
 	})
 	ts := httptest.NewServer(mux)
 	defer ts.Close()
-	checker := NewExternal(ts.URL)
+	checker := NewExternal(ts.URL, Debug())
 	require.NotNil(t, checker)
 	assert.Equal(t, DefaultClientTimeout, checker.client.Timeout)
 	assert.True(t, checker.external)
 	checker.Test(t, http.MethodGet, "/some").
+		WithJSON(map[string]string{"key": "value"}).
 		Check().
 		HasStatus(http.StatusOK).
 		HasBody([]byte("hello"))

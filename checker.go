@@ -32,6 +32,12 @@ func CheckRedirect(policy func(req *http.Request, via []*http.Request) error) Op
 	}
 }
 
+func Debug() Option {
+	return func(c *Checker) {
+		c.debug = true
+	}
+}
+
 // NoRedirect is the alias of the following:
 //
 //	CheckRedirect(func(req *http.Request, via []*http.Request) error {
@@ -59,6 +65,9 @@ type Checker struct {
 	url      string
 	server   *httptest.Server
 	handler  http.Handler
+
+	// debug mode
+	debug bool
 }
 
 // New creates an HTTP Checker for testing with the given handler.
