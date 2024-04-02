@@ -6,20 +6,8 @@ updates:
       interval: daily
     reviewers:
       - ikawaha
-  - package-ecosystem: gomod
-    directory: /plugin/goa
-    schedule:
-      interval: daily
-    reviewers:
-      - ikawaha
   - package-ecosystem: github-actions
     directory: /
-    schedule:
-      interval: daily
-    reviewers:
-      - ikawaha
-  - package-ecosystem: github-actions
-    directory: /plugin/goa
     schedule:
       interval: daily
     reviewers:
