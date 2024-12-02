@@ -3,7 +3,7 @@ module github.com/ikawaha/httpcheck
 go 1.19
 
 require (
-	github.com/itchyny/gojq v0.12.16
+	github.com/itchyny/gojq v0.12.17
 	github.com/stretchr/testify v1.10.0
 )
 
