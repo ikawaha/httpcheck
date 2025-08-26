@@ -1,10 +1,10 @@
 module github.com/ikawaha/httpcheck
 
-go 1.19
+go 1.21
 
 require (
 	github.com/itchyny/gojq v0.12.17
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.0
 )
 
 require (
