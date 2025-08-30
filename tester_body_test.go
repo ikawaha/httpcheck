@@ -158,7 +158,7 @@ func TestTester_MatchesJSONQuery(t *testing.T) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/json", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"Name": "Some", "Age": 30}`))
+		_, _ = w.Write([]byte(`{"Name": "Some", "Age": 30}`))
 	})
 	ts := httptest.NewServer(mux)
 	defer ts.Close()
@@ -173,7 +173,7 @@ func TestTester_NotMatchesJSONQuery(t *testing.T) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/json", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"Name": "Some", "Age": 30}`))
+		_, _ = w.Write([]byte(`{"Name": "Some", "Age": 30}`))
 	})
 	ts := httptest.NewServer(mux)
 	defer ts.Close()
