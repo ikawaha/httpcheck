@@ -1,6 +1,8 @@
 module github.com/ikawaha/httpcheck
 
-go 1.21.0
+go 1.21
+
+toolchain go1.24.5
 
 require (
 	github.com/itchyny/gojq v0.12.17
