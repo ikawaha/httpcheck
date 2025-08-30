@@ -29,7 +29,7 @@ func (tt *Tester) WithJson(expected any) *Tester {
 func (tt *Tester) HasJSON(expected any) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -57,7 +57,7 @@ func (tt *Tester) HasJSON(expected any) *Tester {
 func (tt *Tester) MustHasJSON(expected any) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)

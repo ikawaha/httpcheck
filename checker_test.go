@@ -39,7 +39,7 @@ func (*testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			panic(err)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(body)
+		_, _ = w.Write(body)
 
 	case "/xml":
 		body, err := xml.Marshal(testPerson{
@@ -50,12 +50,12 @@ func (*testHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			panic(err)
 		}
 		w.Header().Set("Content-Type", "application/xml")
-		w.Write(body)
+		_, _ = w.Write(body)
 	case "/byte":
-		w.Write([]byte("hello world"))
+		_, _ = w.Write([]byte("hello world"))
 	case "/mirrorbody":
 		body, _ := io.ReadAll(req.Body)
-		w.Write(body)
+		_, _ = w.Write(body)
 	case "/cookies":
 		http.SetCookie(w, &http.Cookie{
 			Name:  "some",
@@ -91,7 +91,7 @@ func TestNewExternal(t *testing.T) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/some", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("hello"))
+		_, _ = w.Write([]byte("hello"))
 	})
 	ts := httptest.NewServer(mux)
 	defer ts.Close()

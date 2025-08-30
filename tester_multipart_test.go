@@ -39,7 +39,7 @@ func TestTester_WithMultipart(t *testing.T) {
 					require.NoError(t, err)
 					assert.Equal(t, b, got)
 				}
-				p.Close()
+				assert.NoError(t, p.Close())
 			}
 		}
 		w.WriteHeader(http.StatusOK)

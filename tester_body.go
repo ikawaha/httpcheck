@@ -25,7 +25,7 @@ func (tt *Tester) WithBody(body []byte) *Tester {
 func (tt *Tester) HasBody(expected []byte) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -38,7 +38,7 @@ func (tt *Tester) HasBody(expected []byte) *Tester {
 func (tt *Tester) MustHasBody(expected []byte) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -51,7 +51,7 @@ func (tt *Tester) MustHasBody(expected []byte) *Tester {
 func (tt *Tester) ContainsBody(segment []byte) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -66,7 +66,7 @@ func (tt *Tester) ContainsBody(segment []byte) *Tester {
 func (tt *Tester) MustContainsBody(segment []byte) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -81,7 +81,7 @@ func (tt *Tester) MustContainsBody(segment []byte) *Tester {
 func (tt *Tester) NotContainsBody(segment []byte) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -96,7 +96,7 @@ func (tt *Tester) NotContainsBody(segment []byte) *Tester {
 func (tt *Tester) MustNotContainsBody(segment []byte) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -118,7 +118,7 @@ func (tt *Tester) WithString(body string) *Tester {
 func (tt *Tester) HasString(expected string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -131,7 +131,7 @@ func (tt *Tester) HasString(expected string) *Tester {
 func (tt *Tester) MustHasString(expected string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -144,7 +144,7 @@ func (tt *Tester) MustHasString(expected string) *Tester {
 func (tt *Tester) ContainsString(substr string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -157,7 +157,7 @@ func (tt *Tester) ContainsString(substr string) *Tester {
 func (tt *Tester) MustContainsString(substr string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -171,7 +171,7 @@ func (tt *Tester) MustContainsString(substr string) *Tester {
 func (tt *Tester) NotContainsString(substr string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -185,7 +185,7 @@ func (tt *Tester) NotContainsString(substr string) *Tester {
 func (tt *Tester) MustNotContainsString(substr string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -197,7 +197,7 @@ func (tt *Tester) MustNotContainsString(substr string) *Tester {
 func (tt *Tester) MatchesJSONQuery(q string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
@@ -226,7 +226,7 @@ func (tt *Tester) MatchesJSONQuery(q string) *Tester {
 func (tt *Tester) NotMatchesJSONQuery(q string) *Tester {
 	body, err := io.ReadAll(tt.response.Body)
 	require.NoError(tt.t, err)
-	tt.response.Body.Close()
+	_ = tt.response.Body.Close()
 	defer func(body []byte) {
 		tt.response.Body = io.NopCloser(bytes.NewReader(body))
 	}(body)
