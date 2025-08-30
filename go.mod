@@ -4,7 +4,7 @@ go 1.21.0
 
 require (
 	github.com/itchyny/gojq v0.12.17
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
