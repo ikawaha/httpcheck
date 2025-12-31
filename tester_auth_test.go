@@ -27,5 +27,5 @@ func TestTester_WithBearerAuth(t *testing.T) {
 		WithBearerAuth("token")
 
 	v := checker.request.Header.Get("Authorization")
-	assert.Equal(t, "Bearer: token", v)
+	assert.Equal(t, "Bearer token", v)
 }

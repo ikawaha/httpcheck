@@ -18,5 +18,5 @@ func (tt *Tester) WithBasicAuth(user, pass string) *Tester {
 
 // WithBearerAuth is an alias to set bearer auth in the request header.
 func (tt *Tester) WithBearerAuth(token string) *Tester {
-	return tt.WithHeader("Authorization", "Bearer: "+token)
+	return tt.WithHeader("Authorization", "Bearer "+token)
 }
